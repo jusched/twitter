@@ -21,6 +21,13 @@ def tweet_create_view(request, *args, **kwargs):
     """
     REST API Create View
     """
+    user = request.user
+    if not request.user.is_authenticated:
+        user = None
+        if request.is_ajax():
+            return JsonResponse({}, status=401) # Not authorized
+        return redirect(settings.LOGIN_URL)
+    
     # Starts with data or nothing
     form = TweetForm(request.POST or None)
     next_url = request.POST.get("next") or None
@@ -28,6 +35,7 @@ def tweet_create_view(request, *args, **kwargs):
     if form.is_valid():
         obj = form.save(commit=False)
         # Other logic can go here
+        obj.user = user
         obj.save()
 
         if request.is_ajax():
@@ -36,7 +44,7 @@ def tweet_create_view(request, *args, **kwargs):
         if next_url != None and is_safe_url(next_url, ALLOWED_HOSTS):
             return redirect(next_url)
         form = TweetForm()
-        
+
     if form.errors:
         if request.is_ajax():
             return JsonResponse(form.errors, status=400)

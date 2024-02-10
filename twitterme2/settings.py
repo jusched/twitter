@@ -28,6 +28,7 @@ DEBUG = True
 # I can put .mydomain.com to only allow all my subdomains to access the site.
 ALLOWED_HOSTS = ['127.0.0.1']
 
+LOGIN_URL = '/login'
 
 # Application definition
 

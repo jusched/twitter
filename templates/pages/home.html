@@ -12,6 +12,7 @@
         <div class="col-md-4 mx-auto col-10">
             <form class="form" id="tweet-create-form" action="/create/" method="POST">
                 {% csrf_token %}
+                <div class="d-none alert alert-danger"id="tweet-create-form-error"></div>
                 <input type="hidden" value="/" name="next">
                 <textarea required="required" name="content" placeholder="Your tweet" class="form-control"></textarea>
                 <button type="submit" class="btn btn-primary">Tweet</button>
@@ -25,6 +26,14 @@
     </div>
 
     <script>
+        function handleTweetFormError(msg, display) {
+            const errorDiv = document.getElementById('tweet-create-form-error');
+            if (display === true) {
+                errorDiv.setAttribute("class", "alert alert-danger d-block");
+                errorDiv.innerHTML = msg;
+            }
+            
+        }
 
         function handleTweetCreateSubmit(event) {
 
@@ -42,8 +51,11 @@
 
             // This dynamically changes the page to include the new tweet
             xhr.onload = function() {
+
                 if (xhr.status === 201) {
+                    handleTweetFormError("", false);
                     const newTweet = xhr.response;
+                    
                 // Needs to be parsed since the responseType hasn't been defined to JSON.
                     const newTweetJson = JSON.parse(newTweet);
                     const newTweetElement = formatTweetElement(newTweetJson);   
@@ -52,10 +64,23 @@
                     myForm.reset();
                 } else if (xhr.status === 400) {
                     const errorJson = xhr.response;
-                    console.log(errorJson);
+                    const contentError = errorJson.content;
+                    let contentErrorMessage;
+                    if (contentError) {
+                        contentErrorMessage = contentError[0];
+                        if (contentErrorMessage) {
+                            handleTweetFormError(contentErrorMessage, true);
+                        } else {
+                            alert("An error occurred, please try again.")
+                        }
+                    } else {
+                        alert("An error occurred, please try again.")
+                    }
+                } else if (xhr.status === 401) {
+                    console.log("You must login.");
+                    window.location.href = "/login";
                 } else if (xhr.status === 500) {
-                    console.log("There was a server error");
-                
+                    console.log("There was a server error. Please try again.");
                 }
         }
             xhr.send(myFormData);
