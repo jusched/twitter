@@ -25,7 +25,8 @@ SECRET_KEY = 'wx=o$rpr-!0b$k-topvl^bwzecv%_zgy8v6ug%5s_(p3wf4%oi'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# I can put .mydomain.com to only allow all my subdomains to access the site.
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition

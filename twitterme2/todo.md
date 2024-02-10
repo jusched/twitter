@@ -4,6 +4,7 @@
         → Image
     → Delete
     → Retweet
+    → Liking 
 
 2. Users
     → Register
