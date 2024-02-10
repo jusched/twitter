@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Home</h1>
-    <p>Welcome to the home page</p>
-
-    <div id="tweets">
+    
+    <div class="row text-center">
+        <div class="col">
+            <h1>Welcome to Twitter</h1>
+        </div>
+    </div>
+    
+    <div class="row" id="tweets">
         <!-- Replace me -->
         Loading...
     </div>
@@ -40,7 +44,7 @@
 
         // Formats tweets in a way that they all have their ID in their div id, and a like button
         function formatTweetElement(tweet) {
-            let formattedTweet = "<div class='mb-4 tweet' id='tweet-" + tweet.id 
+            let formattedTweet = "<div class='col-12 py-3 mb-4 tweet' id='tweet-" + tweet.id 
             + "'><p>" + tweet.content + 
                 "</p><div class='btn-group'>" +  likeBtn(tweet) +
                 "</div></div>";
