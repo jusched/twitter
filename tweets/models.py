@@ -9,5 +9,5 @@ class Tweet(models.Model):
     # Blank and Null = Not required in the form/database
     image = models.FileField(upload_to='images/', blank=True, null=True)
 
-
+    
 

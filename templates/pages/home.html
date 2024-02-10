@@ -4,19 +4,64 @@
     <h1>Home</h1>
     <p>Welcome to the home page</p>
 
+    <div id="tweets">
+        <!-- Replace me -->
+        Loading...
+    </div>
+
     <script>
+    // Getting the HTML element
+        const tweetsElement = document.getElementById('tweets');
+    // Setting a value to the HTML element
+        tweetsElement.innerHTML = 'Loading...';
+
+    // Replaces both the 'Loading...' and 'Replace me' with the text from the elements.
+        // var el1 = "<h1>Test 1</h1>";
+        // var el2 = "<h1>Test 2</h1>";
+        // var el3 = "<h1>Test 3</h1>";
+        // tweetsElement.innerHTML = el1 + el2 + el3;
+
         const xhr = new XMLHttpRequest();
         const method = 'GET';
         const url = '/tweets/';
         const responseType = 'json';
 
+        function handleLike (tweet_id, currentCount) {
+            console.log(tweet_id, currentCount);
+            currentCount++;
+            return
+        }
+
+        // Creates the like button for each tweet with the number of likes it currently has
+        function likeBtn (tweet) {
+            return "<button class='btn btn-primary btn-small' onclick=handleLike(" +
+            tweet.id + "," + tweet.likes + ")>" + tweet.likes + " Likes</button>";
+        }
+
+        // Formats tweets in a way that they all have their ID in their div id, and a like button
+        function formatTweetElement(tweet) {
+            let formattedTweet = "<div class='mb-4 tweet' id='tweet-" + tweet.id 
+            + "'><p>" + tweet.content + 
+                "</p><div class='btn-group'>" +  likeBtn(tweet) +
+                "</div></div>";
+            return formattedTweet;
+        }
+
         xhr.responseType = responseType;
         // Open the URL (tweets) using GET
         xhr.open(method, url);
         xhr.onload = function() {
-            // 
             const serverResponse = xhr.response;
-            console.log(serverResponse);
+            let listedItems = serverResponse.response;
+            let finalTweet = "";
+            let i;
+
+            for (i = 0; i < listedItems.length; i++) {
+                let tweetObj = listedItems[i];
+                let currentItem = formatTweetElement(tweetObj);
+                finalTweet += currentItem;
+            }
+            tweetsElement.innerHTML = finalTweet;
         }
         xhr.send();
     </script>
