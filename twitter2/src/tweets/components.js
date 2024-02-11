@@ -45,31 +45,6 @@ export function TweetList(props) {
     })
 }
 
-
-export function ActionBtn(props) {
-    const {tweet, action} = props;
-    const [likes, setLikes] = useState(tweet.likes ? tweet.likes : 0);
-    const [userLike, setUserLike] = useState(tweet.userLike === true ? true : false);
-    const className = props.className ? props.className : 'btn btn-primary btn-sm';
-    const actionDisplay = action.display ? action.display : 'Action';
-    const handleClick = (event) => {
-        event.preventDefault();
-        if (action.type === 'like') {
-
-            if (setUserLike === false) {
-                setLikes(likes + 1)
-                setUserLike(true)
-            } else {
-                setLikes(likes - 1)
-                setUserLike(false)
-            }
-            setLikes(tweet.likes + 1)
-        } 
-    }
-    const display = action.type === 'like' ? `${likes} ${actionDisplay}` : actionDisplay;
-    return <button className={className} onClick={handleClick}>{display}</button>
-}
-
 export function Tweet(props) {
     const {tweet} = props;
     const className = props.className ? props.className : 'col-10 mx-auto col-md-6';
@@ -84,3 +59,27 @@ export function Tweet(props) {
         </div>
     </div>
 }
+
+
+export function TweetDetailComponent(props){
+  const {tweetId} = props
+  const [didLookup, setDidLookup] = useState(false)
+  const [tweet, setTweet] = useState(null)
+
+  const handleBackendLookup = (response, status) => {
+    if (status === 200) {
+      setTweet(response)
+    } else {
+      alert("There was an error finding your tweet.")
+    }
+  }
+  useEffect(()=>{
+    if (didLookup === false){
+
+      apiTweetDetail(tweetId, handleBackendLookup)
+      setDidLookup(true)
+    }
+  }, [tweetId, didLookup, setDidLookup])
+
+  return tweet === null ? null : <Tweet tweet={tweet} className={props.className} />
+ }
