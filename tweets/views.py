@@ -110,6 +110,8 @@ def tweet_action_view(request, *args, **kwargs):
         
         elif action == "unlike":
             obj.likes.remove(request.user)
+            serializer = TweetSerializer(obj)
+            return Response(serializer.data, status=200)
 
         elif action == "retweet":
             new_tweet = Tweet.objects.create(
@@ -125,7 +127,7 @@ def tweet_action_view(request, *args, **kwargs):
         else:
             obj.likes.add(request.user)
 
-    return Response({"message" : "Liked tweet!"}, status=200)
+    return Response({"message" : "Liked tweet!"}, status=201)
 
 
 
