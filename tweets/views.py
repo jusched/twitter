@@ -27,12 +27,10 @@ def home_page(request, *args, **kwargs):
 
 
 @api_view(['POST']) # Only method allowed
-# @authentication_classes([SessionAuthentication])
-@permission_classes([IsAuthenticated])
+# @authentication_classes([SessionAuthentication, MyCustomAuth])
+@permission_classes([IsAuthenticated]) # REST API course
 def tweet_create_view(request, *args, **kwargs):
-
-    serializer = TweetSerializer(data=request.POST)
-    print(serializer)
+    serializer = TweetCreateSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
@@ -131,7 +129,7 @@ def tweet_action_view(request, *args, **kwargs):
 
 
 
-
+# Pure Django Views
 
 
 def tweet_create_view_pure_django(request, *args, **kwargs):

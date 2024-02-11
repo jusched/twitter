@@ -26,7 +26,7 @@ SECRET_KEY = '#)=h)_wc*k%f=wk+!$x0t%1wx7*_50$a1%*75s$og(8$27$ju1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 LOGIN_URL = "/login"
 
 MAX_TWEET_LENGTH = 240
@@ -35,18 +35,19 @@ TWEET_ACTION_OPTIONS = ["like", "unlike", "retweet"]
 # Application definition
 
 INSTALLED_APPS = [
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # third-party
     'corsheaders',
     'rest_framework',
     
-    # internal
+    # Internal apps
+    'tweets',
+    'profiles',
     'tweets',
 ]
 
