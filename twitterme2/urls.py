@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 from tweets.views import home_page
 
@@ -24,6 +25,7 @@ urlpatterns = [
 
     # Home page
     path('', home_page),
+    path('react/', TemplateView.as_view(template_name='react.html')),
 
     # Tweets URLs
     path('api/tweets/', include('tweets.urls')),
