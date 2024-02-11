@@ -27,7 +27,7 @@ DEBUG = True
 
 # I can put .mydomain.com to only allow all my subdomains to access the site.
 ALLOWED_HOSTS = ['127.0.0.1']
-
+MAX_TWEET_LENGTH = 240
 LOGIN_URL = '/login'
 
 # Application definition
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third-pary
+    'rest_framework',
 
     # *My apps
     'tweets',
@@ -124,3 +126,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        'rest_framework.authentication.SessionAuthentication'
+    ],
+    "DEFAULT_RENDERER_CLASSES": [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+}

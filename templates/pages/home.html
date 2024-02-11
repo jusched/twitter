@@ -78,7 +78,9 @@
                     }
                 } else if (xhr.status === 401) {
                     console.log("You must login.");
-                    window.location.href = "/login";
+                    window.location.href = "/login";   
+                } else if (xhr.status === 403) {
+                    console.log("You must authenticate.");
                 } else if (xhr.status === 500) {
                     console.log("There was a server error. Please try again.");
                 }
@@ -112,7 +114,7 @@
             xhr.open(method, url);
             xhr.onload = function() {
                 const serverResponse = xhr.response;
-                let listedItems = serverResponse.response;
+                let listedItems = serverResponse;
                 let finalTweet = "";
                 let i;
 
