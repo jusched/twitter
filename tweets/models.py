@@ -5,14 +5,17 @@ from django.db.models import Q
 
 User = settings.AUTH_USER_MODEL
 
+
 class TweetLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tweet = models.ForeignKey("Tweet", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+
 class TweetQuerySet(models.QuerySet):
     def by_username(self, username):
         return self.filter(user__username__iexact=username)
+
 
     def feed(self, user):
         profiles_exist = user.following.exists()
@@ -24,12 +27,14 @@ class TweetQuerySet(models.QuerySet):
             Q(user=user)
         ).distinct().order_by("-timestamp")
 
+
 class TweetManager(models.Manager):
     def get_queryset(self, *args, **kwargs):
         return TweetQuerySet(self.model, using=self._db)
 
     def feed(self, user):
         return self.get_queryset().feed(user)
+
 
 class Tweet(models.Model):
     # Maps to SQL data

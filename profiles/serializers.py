@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import Profile
 
+
 class PublicProfileSerializer(serializers.ModelSerializer):
     first_name = serializers.SerializerMethodField(read_only=True)
     last_name = serializers.SerializerMethodField(read_only=True)
@@ -9,6 +10,7 @@ class PublicProfileSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField(read_only=True)
     follower_count = serializers.SerializerMethodField(read_only=True)
     following_count = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Profile
         fields = [
@@ -24,7 +26,6 @@ class PublicProfileSerializer(serializers.ModelSerializer):
         ]
     
     def get_is_following(self, obj):
-        # request???
         is_following = False
         context = self.context
         request = context.get("request")
@@ -33,6 +34,7 @@ class PublicProfileSerializer(serializers.ModelSerializer):
             is_following = user in obj.followers.all()
         return is_following
     
+    # Methods for the fields
     def get_first_name(self, obj):
         return obj.user.first_name
     
