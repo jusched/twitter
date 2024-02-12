@@ -14,6 +14,7 @@ function getCookie(name) {
   return cookieValue;
 }
 
+
 export function backendLookup(method, endpoint, callback, data) {
   let jsonData;
   if (data){

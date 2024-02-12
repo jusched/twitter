@@ -5,6 +5,8 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 # Function based views to Class Based Views
 
+
+# This function handles the login functionality. It validates the user's credentials, logs in the user, and redirects to the home page.
 def login_view(request, *args, **kwargs):
     form = AuthenticationForm(request, data=request.POST or None)
     if form.is_valid():
@@ -18,6 +20,8 @@ def login_view(request, *args, **kwargs):
     }
     return render(request, "accounts/auth.html", context)
 
+
+# This function handles the logout functionality. It logs out the user and redirects to the login page.
 def logout_view(request, *args, **kwargs):
     if request.method == "POST":
         logout(request)
@@ -31,6 +35,7 @@ def logout_view(request, *args, **kwargs):
     return render(request, "accounts/auth.html", context)
 
 
+# This function handles the user registration functionality. It registers a new user, sets their password, logs them in, and redirects to the home page.
 def register_view(request, *args, **kwargs):
     form = UserCreationForm(request.POST or None)
     if form.is_valid():

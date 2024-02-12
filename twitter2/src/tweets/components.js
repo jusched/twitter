@@ -19,6 +19,7 @@ export function TweetsComponent(props) {
     </div>
 }
 
+
 export function TweetList(props) {
     const [tweetsInit, setTweetsInit] = useState([]);
     const [tweets, setTweets] = useState([]);
@@ -44,6 +45,7 @@ export function TweetList(props) {
         return <Tweet tweet={item} className="my-5 py-5 border bg-white text-dark" key={`${index}-{item.id}`} />
     })
 }
+
 
 export function Tweet(props) {
     const {tweet} = props;

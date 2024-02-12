@@ -8,6 +8,7 @@ import {
   UserPicture
 } from '../profiles'
 
+
 export function ParentTweet(props){
     const {tweet} = props
     return tweet.parent ? <Tweet isRetweet retweeter={props.retweeter} hideActions className={' '} tweet={tweet.parent} /> : null

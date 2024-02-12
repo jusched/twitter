@@ -5,7 +5,6 @@ from .forms import ProfileForm
 from .models import Profile
 
 
-
 def profile_update_view(request, *args, **kwargs):
     if not request.user.is_authenticated: # is_authenticated()
         return redirect("/login?next=/profile/update")
@@ -33,7 +32,6 @@ def profile_update_view(request, *args, **kwargs):
         "title": "Update Profile"
     }
     return render(request, "profiles/form.html", context)
-
 
 
 def profile_detail_view(request, username, *args, **kwargs):

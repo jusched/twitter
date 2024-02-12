@@ -26,7 +26,7 @@ SECRET_KEY = '#)=h)_wc*k%f=wk+!$x0t%1wx7*_50$a1%*75s$og(8$27$ju1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh', 'localhost']
 LOGIN_URL = "/login"
 
 MAX_TWEET_LENGTH = 240
@@ -35,18 +35,17 @@ TWEET_ACTION_OPTIONS = ["like", "unlike", "retweet"]
 # Application definition
 
 INSTALLED_APPS = [
-    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third-party
     'corsheaders',
     'rest_framework',
-    
-    # Internal apps
-    'tweets',
+    # internal
+    'accounts',
     'profiles',
     'tweets',
 ]
@@ -62,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'twitterme2.urls'
+ROOT_URLCONF = 'tweetme2.urls'
 
 TEMPLATES = [
     {
@@ -80,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'twitterme2.wsgi.application'
+WSGI_APPLICATION = 'tweetme2.wsgi.application'
 
 
 # Database
@@ -153,6 +152,9 @@ if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         'rest_framework.renderers.BrowsableAPIRenderer',
     ]
+    # DEFAULT_AUTHENTICATION_CLASSES += [
+    #     'tweetme2.rest_api.dev.DevAuthentication'
+    # ]
 REST_FRAMEWORK = {
     
     'DEFAULT_AUTHENTICATION_CLASSES': DEFAULT_AUTHENTICATION_CLASSES,

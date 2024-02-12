@@ -2,16 +2,19 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_save
 
+
 User = settings.AUTH_USER_MODEL
 
 
 class FollowerRelation(models.Model):
+    # Relationship between a user and a profile
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class Profile(models.Model):
+    # Singular profile for each user
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=220, null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
@@ -23,10 +26,11 @@ class Profile(models.Model):
     project_obj.followers.all() -> All users following this profile
     user.following.all() -> All user profiles I follow
     """
+    
 def user_did_save(sender, instance, created, *args, **kwargs):
+    # Only creates a profile if a new user is created
     if created:
         Profile.objects.get_or_create(user=instance)
 
+# Gets called whenever a user is saved to ensure one-to-one relationship between User and Profile
 post_save.connect(user_did_save, sender=User)
-
-# after the user logs in -> verify profile

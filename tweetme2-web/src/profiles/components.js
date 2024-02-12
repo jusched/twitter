@@ -1,7 +1,6 @@
 import React from 'react'
 
 
-
 export function UserLink (props) {
   const {username} = props
   const handleUserLink = (event) => {
@@ -21,6 +20,7 @@ export  function UserDisplay(props){
     {hideLink === true ? `@${user.username}` : <UserLink username={user.username}>@{user.username}</UserLink>}
   </React.Fragment>
 }
+
 
 export  function UserPicture (props) {
   const {user, hideLink} = props
